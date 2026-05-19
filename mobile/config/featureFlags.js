@@ -17,7 +17,7 @@ export const FeatureFlags = {
   // Testing & Development
   USE_MOCK_DETECTIONS: false, // Set to true to use mock data instead of real API calls
   ENABLE_FACE_MESH: true, // Set to true to enable face mesh detection and overlay
-  ENABLE_DEFAULT_FACE_MESH: true, // Set to true to show default mesh overlay, false for class-based mesh
+  ENABLE_DEFAULT_FACE_MESH: false, // Set to true to show default mesh overlay, false for class-based mesh
 };
 
 /**
@@ -111,7 +111,7 @@ import Constants from 'expo-constants';
 export const AppConfig = {
   // Detection settings
   DETECTION_CONFIDENCE_THRESHOLD: 0.3, // Lower threshold to show more detections
-  DETECTION_INTERVAL: 500, // Run detection every 0.5 second for live feed
+  DETECTION_INTERVAL: 2000, // Run detection every 2 seconds for live feed
   
   // API settings - loaded from environment variables via app.config.js
   API_BASE_URL_DEV: Constants.expoConfig?.extra?.apiBaseUrlDev || 'http://localhost:8000',

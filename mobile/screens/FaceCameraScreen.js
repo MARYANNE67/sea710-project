@@ -32,6 +32,7 @@ export default function FaceCameraScreen({ route, navigation }) {
   const [cameraType] = useState('front'); // Front camera for face
   const [faceMeshData, setFaceMeshData] = useState(null);
   const [isDetecting, setIsDetecting] = useState(false);
+  const isDetectingRef = useRef(false);
   const [faceDetected, setFaceDetected] = useState(false);
   const [photoDimensions, setPhotoDimensions] = useState(null);
   const [cameraViewDimensions, setCameraViewDimensions] = useState(null);
@@ -66,9 +67,9 @@ export default function FaceCameraScreen({ route, navigation }) {
 
   const startFaceDetection = () => {
     if (!FeatureFlags.ENABLE_FACE_MESH) return;
-    
+
     detectionIntervalRef.current = setInterval(() => {
-      if (!isDetecting && cameraRef.current) {
+      if (!isDetectingRef.current && cameraRef.current) {
         detectFace();
       }
     }, FACE_DETECTION_INTERVAL);
@@ -81,6 +82,7 @@ export default function FaceCameraScreen({ route, navigation }) {
     }
 
     setIsDetecting(true);
+    isDetectingRef.current = true;
     try {
       console.log('[Face Detection] Capturing photo...');
       const photo = await cameraRef.current.takePictureAsync({
@@ -151,6 +153,7 @@ export default function FaceCameraScreen({ route, navigation }) {
       setFaceDetected(false);
     } finally {
       setIsDetecting(false);
+      isDetectingRef.current = false;
     }
   };
 

@@ -384,6 +384,9 @@ async def detect_face_mesh(
         # Detect face mesh
         face_data = detector.detect_face_mesh(img)
         
+        # Get image dimensions for coordinate scaling on frontend
+        img_height, img_width = img.shape[:2]
+
         if face_data is None:
             print("[API] No face detected in image")
             return {
@@ -399,12 +402,9 @@ async def detect_face_mesh(
                 },
                 "facial_regions": None
             }
-        
+
         # Get facial regions
         facial_regions = detector.get_facial_regions(face_data)
-        
-        # Get image dimensions for coordinate scaling on frontend
-        img_height, img_width = img.shape[:2]
         
         response = {
             "status": "success",
@@ -417,6 +417,7 @@ async def detect_face_mesh(
                 "height": int(img_height)
             },
             "facial_regions": {
+                "outer_lip": facial_regions.get("outer_lip", []),
                 "upper_lip": facial_regions["upper_lip"],
                 "lower_lip": facial_regions["lower_lip"],
                 "left_eye": facial_regions["left_eye"],
@@ -425,8 +426,8 @@ async def detect_face_mesh(
                 "left_under_eye": facial_regions.get("left_under_eye", []),
                 "right_under_eye": facial_regions.get("right_under_eye", []),
                 "around_mouth": facial_regions.get("around_mouth", []),
-                "left_eyeshadow": facial_regions.get("left_eyeshadow", []),  # Area above left eye
-                "right_eyeshadow": facial_regions.get("right_eyeshadow", []),  # Area above right eye
+                "left_eyeshadow": facial_regions.get("left_eyeshadow", []),
+                "right_eyeshadow": facial_regions.get("right_eyeshadow", []),
             }
         }
         

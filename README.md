@@ -11,6 +11,18 @@ This project combines **YOLOv8 object detection** for makeup product recognition
 
 The system consists of a **FastAPI backend** for model inference and face detection, and a **React Native mobile app** for the user interface.
 
+## Demo
+
+| Home Screen | Product Detection |
+|:-----------:|:-----------------:|
+| ![Home Screen](docs/screenshots/home.png) | ![Product Detection](docs/screenshots/scan_detection.jpeg) |
+| Launch screen with Scan Product button | Real-time YOLOv8 detection — MAC Studio Fix foundation detected at 52% confidence |
+
+| Virtual Try-On Selection | AR Face Mesh Overlay |
+|:------------------------:|:--------------------:|
+| ![Virtual Try-On](docs/screenshots/virtual_tryon.png) | ![AR Face Mesh](docs/screenshots/ar_face_mesh.jpeg) |
+| Product info screen before entering AR mode | MediaPipe face mesh overlay for powder/foundation products |
+
 ## Problem Description and Objectives
 
 Finding and identifying makeup products automatically in images and video streams is challenging due to variations in lighting, packaging, colour, and brand designs. Many beauty platforms and AR applications require precise product recognition before recommending or applying virtual looks.
@@ -147,12 +159,12 @@ This project consists of two main components:
    ```
 
 3. **Verify backend is running**:
-   - Open browser: http://localhost:8000/health
+   - Open browser: http://localhost:8001/health
    - You should see: `{"status": "healthy", ...}`
    - **Keep this terminal open** - server must stay running
 
 4. **Load a model** (optional, but required for detection):
-   - Visit http://localhost:8000/docs
+   - Visit http://localhost:8001/docs
    - Use `/load-model` endpoint to load your trained model
    - Or place model at `models/final/best.pt` (auto-loads on startup)
 
@@ -191,12 +203,12 @@ This project consists of two main components:
 ### Complete Workflow
 
 ```bash
-# Terminal 1: Start Backend
-python -m src.api.main
+# Terminal 1: Start Backend (macOS — uses ARM64 venv)
+./venv/bin/python3.11 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8001
 
 # Terminal 2: Start Mobile App
 cd mobile
-npm start
+npx expo start --clear
 ```
 
 ## Detailed Setup Instructions
@@ -237,9 +249,9 @@ python -m src.api.main
 
 #### Backend Endpoints
 
-- **Health Check**: http://localhost:8000/health
-- **API Docs**: http://localhost:8000/docs (Swagger UI)
-- **Alternative Docs**: http://localhost:8000/redoc
+- **Health Check**: http://localhost:8001/health
+- **API Docs**: http://localhost:8001/docs (Swagger UI)
+- **Alternative Docs**: http://localhost:8001/redoc
 
 ### Mobile App Setup
 

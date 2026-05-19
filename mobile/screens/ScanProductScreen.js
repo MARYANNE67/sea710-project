@@ -562,7 +562,7 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     position: 'absolute',
-    top: -25,
+    top: 0,
     left: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     paddingHorizontal: 8,
